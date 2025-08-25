@@ -1,0 +1,261 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday ❤️</title>
+  <!-- Unique fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#0f0c29; /* deep purple */
+      --bg2:#302b63; /* indigo */
+      --bg3:#24243e; /* midnight */
+      --accent:#ff5da2; /* pink */
+      --accent-2:#ffd166; /* warm yellow */
+      --card:#ffffff10;
+      --text:#f7f7fb;
+      --muted:#c9c9d1;
+    }*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--text);
+  font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, 'Apple Color Emoji','Segoe UI Emoji';
+  background: radial-gradient(80vw 80vh at 20% 10%, #1b153a, transparent 60%),
+              radial-gradient(90vw 90vh at 90% 10%, #1d1744, transparent 60%),
+              linear-gradient(135deg, var(--bg1), var(--bg2) 50%, var(--bg3));
+  overflow-x:hidden;
+}
+
+/* ======= COUNTDOWN OVERLAY ======= */
+#countdownOverlay{
+  position:fixed; inset:0; display:grid; place-items:center; z-index:9999;
+  background: radial-gradient(120vw 120vh at 50% 30%, #000000c0, #000000f0);
+  transition: opacity .8s ease, visibility .8s ease;
+}
+#countdownOverlay.hidden{opacity:0; visibility:hidden}
+.countNumber{
+  font-size: clamp(64px, 16vw, 220px);
+  font-weight: 700;
+  line-height:1; letter-spacing:.02em; color:#fff;
+  text-shadow: 0 12px 40px #0008, 0 0 60px #ff98c855;
+  transform: scale(0.7);
+  transition: transform .35s ease, opacity .35s ease;
+  opacity:.95;
+}
+.countNumber.pop{ transform: scale(1); opacity:1; }
+
+/* floating hearts */
+.hearts{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.heart{ position:absolute; bottom:-60px; font-size:24px; opacity:.8; animation: floatUp linear forwards; }
+@keyframes floatUp{ to { transform: translateY(-110vh) rotate(20deg); opacity:0; }}
+
+/* ======= HERO / MESSAGE ======= */
+header.hero{ min-height:100svh; display:grid; place-items:center; padding:24px; text-align:center; position:relative; }
+.heroCard{
+  background: linear-gradient(180deg, #ffffff09, #ffffff05);
+  border:1px solid #ffffff18; border-radius:28px; padding:32px 24px; backdrop-filter: blur(10px);
+  box-shadow: 0 20px 60px #0005;
+  max-width: 900px; width:min(96%, 900px);
+}
+h1.title{
+  font-family:'Great Vibes', cursive; font-size: clamp(44px, 9vw, 100px);
+  margin: 0 0 8px 0; color: var(--accent);
+  text-shadow: 0 6px 30px #0006, 0 0 18px #ff77b8aa;
+}
+p.subtitle{ margin:8px 0 18px 0; color:var(--muted); font-weight:500; font-size: clamp(14px, 2.8vw, 18px); }
+.btn{
+  display:inline-flex; align-items:center; gap:10px; cursor:pointer;
+  padding:14px 20px; border-radius:999px; border:1px solid #ffffff26; background: #ffffff12;
+  color:var(--text); font-weight:600; letter-spacing:.2px; text-decoration:none;
+  transition: transform .15s ease, box-shadow .15s ease, background .2s;
+}
+.btn:hover{ transform: translateY(-2px); box-shadow:0 12px 22px #0004; background:#ffffff18; }
+
+/* ======= TIMELINE ======= */
+section.timelineWrap{ padding: 40px 16px 80px; }
+.sectionTitle{ text-align:center; font-weight:700; font-size: clamp(20px, 4.6vw, 32px); margin-bottom: 22px; }
+.timeline{
+  position:relative; max-width:1100px; margin: 0 auto; padding: 32px 8px 10px;
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 28px 24px;
+}
+.timeline::before{
+  content:""; position:absolute; left:50%; transform:translateX(-50%); top:0; bottom:0; width:3px; background:#ffffff1e; border-radius:2px; display:none;
+}
+@media (min-width:900px){ .timeline{ grid-template-columns: repeat(5, 1fr);} }
+
+.step{
+  display:flex; flex-direction:column; align-items:center; gap:12px; opacity:.07; filter: saturate(.3) blur(1px);
+  transform: translateY(10px) scale(.98); transition: all .45s ease;
+}
+.step.visible{ opacity:1; filter:none; transform: translateY(0) scale(1); }
+
+.circle{
+  width: 160px; height:160px; border-radius:50%;
+  border:3px solid #ffffff2a; box-shadow: 0 14px 30px #0005, 0 0 0 8px #ffffff06 inset;
+  overflow:hidden; background:#111; display:grid; place-items:center;
+}
+.circle img{ width:100%; height:100%; object-fit:cover; display:block; }
+.caption{ text-align:center; color:var(--muted); font-size:14px; max-width: 200px; }
+
+.controls{ display:flex; align-items:center; justify-content:center; gap:12px; margin-top:20px; }
+
+footer{ text-align:center; padding:28px; color:#ffffff80; font-size:13px; }
+.note{ color:#ffffff90; font-size:12px; margin-top:10px; }
+
+/* subtle glow dots */
+.glowDot{ position:absolute; width:10px; height:10px; border-radius:50%; background: var(--accent); filter: blur(6px); opacity:.4; }
+
+  </style>
+</head>
+<body>
+  <!-- COUNTDOWN OVERLAY -->
+  <div id="countdownOverlay" aria-live="polite">
+    <div class="countNumber" id="countNumber">10</div>
+    <div class="hearts" id="hearts"></div>
+  </div>  <!-- HERO MESSAGE -->  <header class="hero" id="hero">
+    <div class="heroCard">
+      <!-- 👇 Change her name here -->
+      <h1 class="title">Happy Birthday, <span id="herName">My Love</span>! ✨</h1>
+      <p class="subtitle">Every second with you is my favorite memory. Here's a little surprise made with lots of love 💖</p>
+      <a class="btn" href="#memories">See our memories →</a>
+      <p class="note">(Tip: You can change the name, colors and photos in the code comments.)</p>
+    </div>
+    <!-- decorative glow dots -->
+    <span class="glowDot" style="left:8%; top:18%;"></span>
+    <span class="glowDot" style="left:78%; top:26%; background:var(--accent-2);"></span>
+    <span class="glowDot" style="left:14%; top:72%; background:#7dd3fc;"></span>
+  </header>  <!-- TIMELINE / CIRCULAR PHOTOS -->  <section class="timelineWrap" id="memories">
+    <h2 class="sectionTitle">Our Memories — One by One 💞</h2><div class="timeline" id="timeline">
+  <!-- Replace the 5 items below with your real photos & captions.
+       How: Change the src to your image file paths or mobile links.
+       Tip: Keep images square for perfect circles. -->
+  <div class="step visible">
+    <div class="circle"><img src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='%23ff9ec9'/><stop offset='1' stop-color='%23ff6b9e'/></linearGradient></defs><rect width='400' height='400' fill='url(%23g)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Great Vibes, cursive' font-size='64' fill='white'>You</text><text x='50%' y='67%' dominant-baseline='middle' text-anchor='middle' font-family='Poppins' font-size='24' fill='white' opacity='.9'>+ Me</text></svg>" alt="us"/></div>
+    <div class="caption">The day we met — the start of everything ✨</div>
+  </div>
+  <div class="step">
+    <div class="circle"><img src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23ffd166'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Great Vibes, cursive' font-size='72' fill='%230f0c29'>❤️</text></svg>" alt="heart"/></div>
+    <div class="caption">Your smile that makes everything brighter 😊</div>
+  </div>
+  <div class="step">
+    <div class="circle"><img src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%237dd3fc'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Poppins' font-size='80' fill='%230f172a'>🎂</text></svg>" alt="cake"/></div>
+    <div class="caption">Your birthdays — my favorite days to celebrate 🎂</div>
+  </div>
+  <div class="step">
+    <div class="circle"><img src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%2394f2c6'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Poppins' font-size='80' fill='%230f172a'>📸</text></svg>" alt="photo"/></div>
+    <div class="caption">Little moments we clicked and kept forever 📸</div>
+  </div>
+  <div class="step">
+    <div class="circle"><img src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%239b87ff'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Great Vibes, cursive' font-size='60' fill='white'>Forever</text></svg>" alt="forever"/></div>
+    <div class="caption">More adventures with you — always & forever 💫</div>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="btn" id="prevBtn" disabled>← Previous</button>
+  <button class="btn" id="nextBtn">Next memory →</button>
+  <button class="btn" id="autoBtn" aria-pressed="false">▶ Auto Play</button>
+</div>
+
+  </section>  <footer>Made with ❤️ for you. Happy Birthday! 🎉</footer>  <script>
+    // ===== COUNTDOWN LOGIC =====
+    const overlay = document.getElementById('countdownOverlay');
+    const countEl = document.getElementById('countNumber');
+    const heartsEl = document.getElementById('hearts');
+
+    let count = 10; // 👈 change start number if you want
+    countEl.textContent = count;
+    countEl.classList.add('pop');
+
+    // sprinkle floating hearts during countdown
+    const heartChars = ['💖','💗','💞','💓','💕','💘'];
+    function spawnHeart(){
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
+      h.style.left = Math.random()*100 + 'vw';
+      h.style.animationDuration = (5 + Math.random()*3)+'s';
+      heartsEl.appendChild(h);
+      setTimeout(()=>h.remove(), 9000);
+    }
+    const heartsTimer = setInterval(spawnHeart, 400);
+
+    const t = setInterval(()=>{
+      count--;
+      if(count > 0){
+        countEl.textContent = count;
+        countEl.classList.remove('pop');
+        void countEl.offsetWidth; // reflow to retrigger animation
+        countEl.classList.add('pop');
+      } else {
+        clearInterval(t);
+        clearInterval(heartsTimer);
+        // Show the birthday message word-by-word
+        showBirthdayMessage().then(()=>{
+          overlay.classList.add('hidden');
+        });
+      }
+    }, 1000);
+
+    async function showBirthdayMessage(){
+      // brief flash of "Happy Birthday" on the overlay before hiding
+      countEl.style.fontFamily = 'Great Vibes, cursive';
+      countEl.style.color = 'var(--accent)';
+      countEl.style.textShadow = '0 10px 40px #0007, 0 0 30px #ff7db6';
+      countEl.style.fontSize = 'clamp(52px, 14vw, 180px)';
+      countEl.textContent = 'Happy Birthday!';
+      countEl.classList.remove('pop');
+      void countEl.offsetWidth; countEl.classList.add('pop');
+      await new Promise(r=>setTimeout(r, 1200));
+    }
+
+    // ===== TIMELINE STEP-BY-STEP =====
+    const steps = Array.from(document.querySelectorAll('.step'));
+    let idx = 0; // first is visible
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const autoBtn = document.getElementById('autoBtn');
+    let autoTimer = null;
+
+    function updateButtons(){
+      prevBtn.disabled = idx <= 0;
+      nextBtn.disabled = idx >= steps.length-1;
+    }
+
+    function reveal(to){
+      idx = Math.max(0, Math.min(to, steps.length-1));
+      steps.forEach((s, i)=>{
+        if(i <= idx) s.classList.add('visible');
+        else s.classList.remove('visible');
+      });
+      updateButtons();
+    }
+
+    prevBtn.addEventListener('click', ()=>{ reveal(idx-1); });
+    nextBtn.addEventListener('click', ()=>{ reveal(idx+1); });
+
+    autoBtn.addEventListener('click', ()=>{
+      const active = autoBtn.getAttribute('aria-pressed') === 'true';
+      if(active){
+        autoBtn.setAttribute('aria-pressed','false');
+        autoBtn.textContent = '▶ Auto Play';
+        clearInterval(autoTimer); autoTimer = null;
+      } else {
+        autoBtn.setAttribute('aria-pressed','true');
+        autoBtn.textContent = '⏸ Stop Auto';
+        autoTimer = setInterval(()=>{
+          if(idx < steps.length-1) reveal(idx+1); else reveal(0);
+        }, 1800);
+      }
+    });
+
+    // tap/click on timeline also reveals next step
+    document.getElementById('timeline').addEventListener('click', ()=>{
+      if(idx < steps.length-1) reveal(idx+1); else reveal(0);
+    });
+
+    // ===== CUSTOMIZATION HOOKS =====
+    // Change her name here (or directly edit the HTML):
+    // document.getElementById('herName').textContent = 'Priya';
+  </script></body>
+</html>
